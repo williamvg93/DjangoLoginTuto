@@ -1,0 +1,16 @@
+:root {
+    --soft-white-text : #ADB5BD;
+    --soft-white-text-hover : #E9ECEF;
+}
+
+.soft-white-text {
+    color: #ADB5BD;
+}
+
+footer ul li a {
+    color: var(--soft-white-text)!important;
+}
+
+footer ul li a:hover {
+    color: var(--soft-white-text-hover)!important;
+}
