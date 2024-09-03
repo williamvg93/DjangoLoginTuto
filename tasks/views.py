@@ -1,16 +1,10 @@
-from django.shortcuts import render
-# from django.contrib.auth.forms import UserCreationForm
-from tasks.forms import NewUserForm
+from django.shortcuts import render, HttpResponse, redirect
+from django.contrib.auth.models import User
+from django.contrib.auth import login
 
 # Create your views here.
-def mainPage(request):
 
-    form = NewUserForm()
-    #if "id_usable_password" in form.fields:
-     #   del form.fields["id_usable_password"]
-
+def tasks(request):
     return render(
-        request,
-        "layouts/tasks/signup.html",
-        {"pageTitle": "SignUp", "mainPageTitle": "SignUp", "form": form},
+        request, "layouts/tasks/tasks.html", {"pageTitle": "Tasks", "mainPageTitle": "Tasks"}
     )
