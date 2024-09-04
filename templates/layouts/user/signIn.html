@@ -1,0 +1,29 @@
+{% extends "index.html" %}
+
+{% block mainContent %}
+    <div class="my-5 container d-flex align-self-center align-items-center justify-content-center">
+        <div class="card col-7 align-items-center border-primary">
+            {% if msgError %}
+            <div class="alert alert-danger w-100 text-center alert-dismissible fade show" role="alert">
+                <strong>{{msgError}}</strong> 
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            {% endif %}
+            <div class="card-header w-100 text-center text-white bg-primary">
+                <h3 class="p-3">{{mainPageTitle}}</h2>
+            </div>
+            <div class="card-body  w-75">
+                <form action="{% url 'signIn' %}" id="fLogin" method="post" class="d-flex justify-content-center flex-column align-items-center">
+                    {% csrf_token %}
+                    {% for ele in form  %}
+                        <div class="mb-3 w-100">
+                                <label for="{{ ele.id_for_label }}" class="form-label">{{ ele.label }}</label>
+                                <input type="{{ ele.field.widget.input_type }}" class="form-control" required name="{{ ele.name }}" id="{{ ele.id_for_label }}">
+                        </div>
+                    {% endfor %}
+                        <input class="btn btn-primary my-3 w-100 py-3 fs-4" type="submit" value="Login" id="btn_enviar">
+                </form> 
+            </div>
+        </div>
+    </div>  
+{% endblock mainContent %}
