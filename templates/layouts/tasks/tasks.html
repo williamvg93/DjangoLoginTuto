@@ -1,1 +1,38 @@
 {% extends "index.html" %}
+
+{% block mainContent %}
+
+<div class="card-group">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 w-100 g-4">
+    {% for task in data %}
+<!--         <div class="col-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">{{task.title}}</h5>
+                    <p class="card-text">{{task.description}}</p>
+                </div>
+            </div>
+      </div> -->
+    <div class="col">
+        {% if task.important == True %}
+        <div class="card text-bg-primary">
+        {% else %}
+        <div class="card text-bg-secondary">
+        {% endif %}
+            <div class="card-header text-center">
+                  <h5>{{task.title|title}}</h5>
+            </div>
+            <div class="card-body">
+                <h6 class="card-subtitle mb-3">User: {{task.fkUser|title}}</h6>
+                <p class="card-text">{{task.description|title}}</p>
+            </div>
+            {% if task.important == True %}
+            <div class="card-footer bg-transparent">Important !!</div>
+            {% endif %}
+        </div>
+    </div>
+    {% endfor %}
+    </div>
+</div>
+
+{% endblock mainContent %}
