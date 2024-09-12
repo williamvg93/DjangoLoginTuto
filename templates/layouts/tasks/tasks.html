@@ -3,34 +3,33 @@
 {% block mainContent %}
 
 <div class="card-group">
-    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 w-100 g-4">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-5 w-100 g-4">
     {% for task in data %}
-<!--         <div class="col-3">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">{{task.title}}</h5>
-                    <p class="card-text">{{task.description}}</p>
-                </div>
-            </div>
-      </div> -->
+    
     <div class="col">
         {% if task.important == True %}
-        <div class="card text-bg-primary">
-        {% else %}
-        <div class="card text-bg-secondary">
-        {% endif %}
-            <div class="card-header text-center">
-                  <h5>{{task.title|title}}</h5>
+        <div class="card  bg-primary-subtle">
+            <div class="card-header text-center text-bg-primary">
+                    <h5>{{task.title|title}}</h5>
             </div>
             <div class="card-body">
-                <h6 class="card-subtitle mb-3">User: {{task.fkUser|title}}</h6>
-                <p class="card-text">{{task.description|title}}</p>
+                <p class="card-subtitle mb-3"><strong>User:</strong> {{task.fkUser|title}}</p>
+                <p class="card-text"><strong>Description:</strong> {{task.description|title}}</p>
             </div>
-            {% if task.important == True %}
-            <div class="card-footer bg-transparent">Important !!</div>
-            {% endif %}
+            <div class="card-footer text-bg-primary text-center"><strong>Important !!</strong></div>
         </div>
-    </div>
+        {% else %}
+        <div class="card bg-dark-subtle">
+            <div class="card-header text-center text-bg-secondary">
+                    <h5>{{task.title|title}}</h5>
+            </div>
+            <div class="card-body">
+                <p class="card-subtitle mb-3"><strong>User:</strong> {{task.fkUser|title}}</p>
+                <p class="card-text"><strong>Description:</strong> {{task.description|title}}</p>
+            </div>
+        </div>
+        {% endif %}
+    </div>  
     {% endfor %}
     </div>
 </div>

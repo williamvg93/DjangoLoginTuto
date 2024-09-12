@@ -1,0 +1,56 @@
+{% extends "index.html" %}
+
+
+{% block mainContent %}
+
+<div class="container py-3">
+  <h1 class="my-3">{{mainPageTitle}}</h1>
+  <div class="row d-flex justify-content-center my-4">
+    <div class="col-6">
+      <form action="" method="post">
+        {% csrf_token %}
+        <div class="input-group mb-3">
+          <input type="text" class="form-control" placeholder="Task Id" aria-label="Task Id" aria-describedby="btn-search" id="taskId" name="taskId">
+          <button class="btn btn-primary" type="submit" id="btn-search">Search</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  {% if data %}
+  <div class="table-responsive">
+
+    <table class="table table-bordered table-info">
+      <thead class="table-primary">
+        <tr>
+          <th scope="col" class="">Id</th>
+          <th scope="col">Title</th>
+          <th scope="col">Description</th>
+          <th scope="col">Created</th>
+          <th scope="col">Date Complete</th>
+          <th scope="col">Important</th>
+          <th scope="col">User</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>{{data.id}}</th>
+          <td>{{data.title}}</td>
+          <td>{{data.description}}</td> 
+          <td>{{data.created}}</td>
+          <td>{{data.dateCompleted}}</td>
+          <td>{{data.important}}</td>
+          <td>{{data.fkUser}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  {% endif %}
+  {% if msgError %}
+  <div class="alert alert-danger alert-dismissible fade show" role="alert">
+    {{msgError}}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+  {% endif %}
+</div>
+
+{% endblock mainContent %}
