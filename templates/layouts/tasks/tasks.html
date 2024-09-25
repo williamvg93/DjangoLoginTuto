@@ -10,7 +10,12 @@
         {% if task.important == True %}
         <div class="card  bg-primary-subtle">
             <div class="card-header text-center text-bg-primary">
-                    <h5>{{task.title|title}}</h5>
+                    <form action="{% url 'taskSearch' %}" method="post">
+                        {% csrf_token %}
+                        <button class="btn btn-link text-light text-decoration-none" type="submit" name="TId" value="{{task.id}}">     
+                            <h5>{{task.title|title}}</h5>
+                        </button> 
+                    </form>
             </div>
             <div class="card-body">
                 <p class="card-subtitle mb-3"><strong>User:</strong> {{task.fkUser|title}}</p>
@@ -21,7 +26,12 @@
         {% else %}
         <div class="card bg-dark-subtle">
             <div class="card-header text-center text-bg-secondary">
-                    <h5>{{task.title|title}}</h5>
+                    <form action="{% url 'taskSearch' %}" method="post">
+                        {% csrf_token %}
+                        <button class="btn btn-link text-light text-decoration-none" type="submit" name="TId" value="{{task.id}}">     
+                            <h5>{{task.title|title}}</h5>
+                        </button> 
+                    </form>
             </div>
             <div class="card-body">
                 <p class="card-subtitle mb-3"><strong>User:</strong> {{task.fkUser|title}}</p>
