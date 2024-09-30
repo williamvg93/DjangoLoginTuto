@@ -42,17 +42,20 @@
           <td>{{data.important}}</td>
           <td>{{data.fkUser}}</td>
           <td>
-            <form action="" method="post">
-            {% csrf_token %}
-              <!-- <div class="input-group">
-                <button class="btn btn-primary btn-sm me-1" type="submit" id="btn-search">Delete</button>
-                <button class="btn btn-primary btn-sm m-0" type="submit" id="btn-search">Edit</button>
-              </div> -->
-              <div class="d-grid align-items-center d-md-block"></div>
-                <button class="btn btn-danger btn-sm" type="button">Edit</button>
-                <button class="btn btn-primary btn-sm" type="button">Delete</button>
-              </div>
-            </form>
+            <div class="d-flex justify-content-center align-items-center">
+              <form action="{% url 'updateTask' %}" method="post">
+                  {% csrf_token %}
+                  <button class="btn btn-primary btn-sm me-1" type="submit" name="id" value="{{data.id}}">     
+                    Update
+                  </button>
+              </form>
+              <form action="{% url 'updateTask' %}" method="post">
+                  {% csrf_token %}
+                  <button class="btn btn-danger btn-sm me-1" type="submit" name="id" value="{{data.id}}">    
+                    Delete
+                  </button>
+              </form>
+            </div>
           </td>
         </tr>
       </tbody>

@@ -12,7 +12,7 @@
             <div class="card-header text-center text-bg-primary">
                     <form action="{% url 'taskSearch' %}" method="post">
                         {% csrf_token %}
-                        <button class="btn btn-link text-light text-decoration-none" type="submit" name="TId" value="{{task.id}}">     
+                        <button class="btn btn-link text-light text-decoration-none" type="submit" name="taskId" value="{{task.id}}">     
                             <h5>{{task.title|title}}</h5>
                         </button> 
                     </form>

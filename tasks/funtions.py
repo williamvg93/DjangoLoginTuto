@@ -4,6 +4,7 @@ def GetTask(taskId):
     try:
         task = Task.objects.get(pk=taskId)
         print(task)
+        print(f"id: {task.id}")
         print(type(task))
         return task
     except Exception as err:

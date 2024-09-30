@@ -1,9 +1,7 @@
 {% extends "index.html" %}
 
-
 {% block mainContent %}
-
-
+  
 {% if msgError %}
 <div class="alert alert-danger w-100 text-center alert-dismissible fade show" role="alert">
     <strong>{{msgError}}</strong> 
@@ -16,38 +14,45 @@
                         <h3 class="p-3">{{mainPageTitle}}</h2>
                     </div>
                     <div class="card-body  w-75">
-                        <form action="" id="fCreteUser" method="post" class="d-flex justify-content-center flex-column align-items-center">
+                        <form action="" id="fUpdateUser" method="post" class="d-flex justify-content-center flex-column align-items-center">
                             {% csrf_token %}
                             {% for ele in form  %}
                                 <div class="mb-3 w-100">
                                     <!-- <label for="">{{ele.name}}</label> -->
                                         {% if ele.name == "description" %}
                                             <label for="{{ ele.id_for_label }}">{{ ele.label }}</label>
-                                            <textarea class="form-control" placeholder="Write the task description" name="{{ ele.name }}" id="{{ ele.id_for_label }}"></textarea>
+                                            <textarea class="form-control" 
+                                            name="{{ ele.name }}" id="{{ ele.id_for_label }}">{{ ele.value }}</textarea>
                                             <div id="ele.id_for_label" class="form-text">{{ ele.help_text }}</div>                                        
                                         {% elif ele.name == "dateCompleted" %}
                                             <label for="{{ ele.id_for_label }}" class="form-label">{{ ele.label }}</label>
-                                            <input type="datetime-local" class="form-control" name="{{ ele.name }}" id="{{ ele.id_for_label }}">
+                                            <input type="datetime-local" value="{{ ele.value|date:'Y-m-d\\TH:i' }}" class="form-control" name="{{ ele.name }}" id="{{ ele.id_for_label }}"
+                                        >
                                             <div id="ele.id_for_label" class="form-text">{{ ele.help_text }}</div>
                                         {% elif ele.name == "important" %}
                                             <div class="form-check">
                                                 <label class="form-check-label" for="ele.id_for_label">
                                                 {{ ele.label }}
                                                 </label>
-                                                <input class="form-check-input" type="checkbox" name="{{ ele.name }}" id="ele.id_for_label">
+                                                <input class="form-check-input" type="checkbox" name="{{ ele.name }}" id="ele.id_for_label"
+                                                {% if ele.value %} checked {% endif %} >
                                             </div>
 
                                         {% elif ele.name == "fkUser" %}
                                         <label for="id_fkUser" class="form-label">{{ ele.label }}</label>
-                                        {{ele}}                 
+                                        {{ele}}     
+                                        {% elif ele.name == "id" %}
+                                        <input type="hidden" name="id" value="{{ele.value}}">
                                         {% else %}                                        
                                             <label for="{{ ele.id_for_label }}" class="form-label">{{ ele.label }}</label>
-                                            <input type="{{ ele.field.widget.input_type }}" class="form-control" name="{{ ele.name }}" id="{{ ele.id_for_label }}">
+                                            <input type="{{ ele.field.widget.input_type }}" class="form-control" name="{{ ele.name }}" id="{{ ele.id_for_label }}"
+                                            value="{{ele.value}}">
                                             <div id="ele.id_for_label" class="form-text">{{ ele.help_text }}</div>
-                                        {% endif %}
+                                        {% endif %}                                      
                                 </div>
                             {% endfor %}
-                                <input class="btn btn-primary my-3 w-100 py-3 fs-4" type="submit" value="Add Task" id="btn_enviar">
+                                <input type="hidden" name="_method" value="PUT">
+                                <input class="btn btn-primary my-3 w-100 py-3 fs-4" type="submit" name="btn_update" value="UpdateTask" id="btn_update">
                        </form> 
                 </div>
         </div>

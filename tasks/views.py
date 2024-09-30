@@ -1,7 +1,8 @@
+import re
 from django.shortcuts import render, HttpResponse, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import login
-from tasks.forms import AddTaskForm
+from tasks.forms import AddTaskForm, UpdateTaskForm
 from tasks.models import Task
 from tasks.funtions import GetTask
 
@@ -35,6 +36,7 @@ def addTask(request):
             newTask = form.save(commit=False)
             newTask.fkUser = request.user
             newTask.save()
+            redirect('tasks')
         except Exception as err:
             return render(
                 request,
@@ -48,7 +50,7 @@ def addTask(request):
             )
         return render(
             request,
-            "layouts/tasks/addTask.html",
+            "layouts/tasks/tasks.html",
             {"pageTitle": "AddTask", "mainPageTitle": "Add Taks", "form": AddTaskForm},
         )
 
@@ -82,14 +84,6 @@ def taskSearch(request):
             "mainPageTitle": "Taks Detail",
     }
     if request.POST:
-        if "TId" in request.POST:
-            data = GetTask(request.POST["TId"])
-            if isinstance(data, str):
-                dataPage["msgError"] = data
-            else:
-                dataPage["data"] = data
-            return render(request, "layouts/tasks/searchTask.html", dataPage)
-
         if "taskId" in request.POST:
             print(request.POST)
             data = GetTask(request.POST["taskId"])
@@ -100,3 +94,37 @@ def taskSearch(request):
             return render(request, "layouts/tasks/searchTask.html", dataPage)
     else:
         return render(request, "layouts/tasks/searchTask.html", dataPage)
+
+
+def updateTask(request):
+    taskId = None
+    dataPage = {
+            "pageTitle": "UpdateTask", "mainPageTitle": "Update Task"
+    }
+
+    if request.method == "POST":
+        if "id" in request.POST:
+            print(request.POST)
+            taskId = request.POST["id"]
+
+    data = GetTask(taskId)
+
+    if isinstance(data, str):
+        dataPage["msgError"] = data
+    else:
+        if request.method == "POST":
+            if "_method" in request.POST:
+                print(request.POST["_method"])
+                taskId = request.POST["id"]
+                data = GetTask(taskId)
+                formData = UpdateTaskForm(request.POST, instance=data)
+                try:
+                    formData.save()
+                    return redirect('tasks')
+                except Exception as e:
+                    dataPage["msgError"] = f"Ocurrió un error: {e}"
+                    dataPage["form"] = UpdateTaskForm(instance=data)
+                    return render(request, "layouts/tasks/updateTask.html", dataPage)
+        formData = UpdateTaskForm(instance=data)
+        dataPage["form"] = formData
+    return render(request, "layouts/tasks/updateTask.html", dataPage)
