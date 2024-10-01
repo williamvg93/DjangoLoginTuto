@@ -49,9 +49,9 @@
                     Update
                   </button>
               </form>
-              <form action="{% url 'updateTask' %}" method="post">
+              <form action="{% url 'deleteTask' data.id %}" method="post">
                   {% csrf_token %}
-                  <button class="btn btn-danger btn-sm me-1" type="submit" name="id" value="{{data.id}}">    
+                  <button class="btn btn-danger btn-sm me-1" type="submit">    
                     Delete
                   </button>
               </form>

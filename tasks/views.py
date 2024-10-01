@@ -36,7 +36,7 @@ def addTask(request):
             newTask = form.save(commit=False)
             newTask.fkUser = request.user
             newTask.save()
-            redirect('tasks')
+            return redirect('tasks')
         except Exception as err:
             return render(
                 request,
@@ -48,11 +48,6 @@ def addTask(request):
                     "msgError": f"An Error has occurred : {err}",
                 },
             )
-        return render(
-            request,
-            "layouts/tasks/tasks.html",
-            {"pageTitle": "AddTask", "mainPageTitle": "Add Taks", "form": AddTaskForm},
-        )
 
 
 def taskDetail(request, taskId):
@@ -128,3 +123,12 @@ def updateTask(request):
         formData = UpdateTaskForm(instance=data)
         dataPage["form"] = formData
     return render(request, "layouts/tasks/updateTask.html", dataPage)
+
+
+def deleteTask(request, taskId):
+    if request.method == "POST":
+        task = GetTask(taskId)
+        task.delete()
+        return redirect('tasks')
+    else:
+        return redirect("tasks")
