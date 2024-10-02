@@ -20,6 +20,6 @@ class AddTaskForm(ModelForm):
     class Meta:
         model = Task
         # fields = ["title", "description", "dateCompleted", "important", "fkUser"]
-        fields = ["title", "description", "dateCompleted", "important"]
+        fields = ["title", "description", "important"]
 
         # widgets = {"fkUser": forms.Select(attrs={"class": "form-select"})}

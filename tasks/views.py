@@ -21,6 +21,30 @@ def tasks(request):
     )
 
 
+def tasksCompleted(request):
+
+    # tasks = Task.objects.all()
+    tasks = Task.objects.filter(fkUser=request.user, dateCompleted__isnull=False)
+
+    return render(
+        request,
+        "layouts/tasks/tasks.html",
+        {"pageTitle": "Tasks", "mainPageTitle": "Tasks List", "data": tasks},
+    )
+
+
+def tasksPending(request):
+
+    # tasks = Task.objects.all()
+    tasks = Task.objects.filter(fkUser=request.user, dateCompleted__isnull=True)
+
+    return render(
+        request,
+        "layouts/tasks/tasks.html",
+        {"pageTitle": "Tasks", "mainPageTitle": "Tasks List", "data": tasks},
+    )
+
+
 def addTask(request):
 
     if request.method == "GET":
@@ -86,6 +110,9 @@ def taskSearch(request):
                 dataPage["msgError"] = data
             else:
                 dataPage["data"] = data
+            return render(request, "layouts/tasks/searchTask.html", dataPage)
+        else:
+            dataPage["msgError"] = "no task id received"
             return render(request, "layouts/tasks/searchTask.html", dataPage)
     else:
         return render(request, "layouts/tasks/searchTask.html", dataPage)

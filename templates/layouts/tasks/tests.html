@@ -1,0 +1,116 @@
+<div class="card-group">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-5 w-100 g-4">
+    {% for task in data %}
+    
+    <div class="col">
+        <div class="card bg-dark-subtle">
+            <div class="card-header text-center text-bg-secondary">
+                <form action="{% url 'taskSearch' %}" method="post">
+                    {% csrf_token %}
+                    <button class="btn btn-link text-light text-decoration-none" type="submit" name="taskId" value="{{task.id}}">     
+                        <h5>{{task.title|title}}</h5>
+                    </button> 
+                </form>
+            </div>
+            <div class="card-body">
+                <p class="card-subtitle mb-3"><strong>User:</strong> {{task.fkUser|title}}</p>
+                <p class="card-text"><strong>Description:</strong> {{task.description|title}}</p>
+                {% if task.dateCompleted is not None %}
+                <p class="card-text"><strong>DateCompleted:</strong> {{task.dateCompleted|date:"l, d F Y"}}</p>
+                {% endif %}
+            </div>
+            {% if task.important == True and task.dateCompleted is not None %}
+                <div class="d-flex justify-content-start">
+                    {% if task.important == True %}
+                    <div class="col card-footer bg-success-subtle text-success-emphasis text-center">
+                        <strong>Important!</strong>
+                    </div>
+                    {% endif %}
+                    {% if task.dateCompleted is not None %}  
+                    <div class="col card-footer bg-primary-subtle text-primary-emphasis text-center">
+                        <strong>Completed!</strong>
+                    </div>
+                    {% endif %}
+                </div>
+            {% else %}
+                {% if task.important == True %}
+                    <div class="col card-footer bg-success-subtle text-success-emphasis text-center">
+                        <strong>Important!</strong>
+                    </div>
+                {% endif %}
+                {% if task.dateCompleted is not None %}  
+                    <div class="col card-footer bg-primary-subtle text-primary-emphasis text-center">
+                        <strong>Completed!</strong>
+                    </div>
+                {% endif %}
+            {% endif %}
+        </div>
+    </div>  
+    {% endfor %}
+    </div>
+</div>
+
+
+<!-- Doble Div -->
+<div class="card-group">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-5 w-100 g-4">
+    {% for task in data %}
+    
+    <div class="col">
+        {% if task.important == True %}
+        <div class="card bg-dark-subtle">
+            <div class="card-header text-center text-bg-secondary">
+                    <form action="{% url 'taskSearch' %}" method="post">
+                        {% csrf_token %}
+                        <button class="btn btn-link text-light text-decoration-none" type="submit" name="taskId" value="{{task.id}}">     
+                            <h5>{{task.title|title}}</h5>
+                        </button> 
+                    </form>
+            </div>
+            <div class="card-body">
+                <p class="card-subtitle mb-3"><strong>User:</strong> {{task.fkUser|title}}</p>
+                <p class="card-text"><strong>Description:</strong> {{task.description|title}}</p>
+                {% if task.dateCompleted is not None %}
+                <p class="card-text"><strong>DateCompleted:</strong> {{task.dateCompleted|date:"l, d F Y"}}</p>
+                {% endif %}
+            </div>
+<!--             <div class="card-footer bg-success-subtle text-success-emphasis text-center"><strong>Important !!</strong></div> -->
+            {% if task.dateCompleted is not None %}
+            <div class="d-flex justify-content-start">
+                <div class="col card-footer bg-success-subtle text-success-emphasis text-center">
+                    <strong>Important!</strong>
+                </div>
+                <div class="col card-footer bg-primary-subtle text-primary-emphasis text-center">
+                    <strong>Completed!</strong>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+        {% else %}
+        <div class="card bg-dark-subtle">
+            <div class="card-header text-center text-bg-secondary">
+                    <form action="{% url 'taskSearch' %}" method="post">
+                        {% csrf_token %}
+                        <button class="btn btn-link text-light text-decoration-none" type="submit" name="taskId" value="{{task.id}}">     
+                            <h5>{{task.title|title}}</h5>
+                        </button> 
+                    </form>
+            </div>
+            <div class="card-body">
+                <p class="card-subtitle mb-3"><strong>User:</strong> {{task.fkUser|title}}</p>
+                <p class="card-text"><strong>Description:</strong> {{task.description|title}}</p>
+                {% if task.dateCompleted is not None %}
+                <p class="card-text"><strong>DateCompleted:</strong> {{task.dateCompleted|date:"l, d F Y"}}</p>
+                {% endif %}
+            </div>
+            {% if task.dateCompleted is not None %}
+            <div class="col card-footer bg-primary-subtle text-primary-emphasis text-center">
+                <strong>Completed!</strong>
+            </div>
+            {% endif %}
+        </div>
+        {% endif %}
+    </div>  
+    {% endfor %}
+    </div>
+</div>

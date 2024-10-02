@@ -15,7 +15,9 @@
             Task
           </a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="{% url 'tasks' %}">List Task</a></li>
+            <li><a class="dropdown-item" href="{% url 'tasks' %}">Task List</a></li>
+            <li><a class="dropdown-item" href="{% url 'taskCompleted' %}">Task Completed List</a></li>
+            <li><a class="dropdown-item" href="{% url 'tasksPending' %}">Task Pending List</a></li>
             <li><a class="dropdown-item" href="{% url 'addTask' %}">Add Task</a></li>
             <li><a class="dropdown-item" href="{% url 'taskSearch' %}">Search Task</a></li>
           </ul>
