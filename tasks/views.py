@@ -1,10 +1,12 @@
 import re
+from django.http import Http404
 from django.shortcuts import render, HttpResponse, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import login
 from tasks.forms import AddTaskForm, UpdateTaskForm
 from tasks.models import Task
 from tasks.funtions import GetTask
+from django.utils import timezone
 
 # Create your views here.
 
@@ -21,7 +23,7 @@ def tasks(request):
     )
 
 
-def tasksCompleted(request):
+def lTasksCompleted(request):
 
     # tasks = Task.objects.all()
     tasks = Task.objects.filter(fkUser=request.user, dateCompleted__isnull=False)
@@ -33,7 +35,7 @@ def tasksCompleted(request):
     )
 
 
-def tasksPending(request):
+def lTasksPending(request):
 
     # tasks = Task.objects.all()
     tasks = Task.objects.filter(fkUser=request.user, dateCompleted__isnull=True)
@@ -152,10 +154,20 @@ def updateTask(request):
     return render(request, "layouts/tasks/updateTask.html", dataPage)
 
 
+def completedTask(request, taskId):
+    if request.method == "POST":
+        task = Task.objects.get(id=taskId, fkUser=request.user)
+        task.dateCompleted = timezone.now()
+        task.save()
+        return redirect('tasks')
+    else:
+        raise Http404
+
+
 def deleteTask(request, taskId):
     if request.method == "POST":
         task = GetTask(taskId)
         task.delete()
         return redirect('tasks')
     else:
-        return redirect("tasks")
+        raise Http404

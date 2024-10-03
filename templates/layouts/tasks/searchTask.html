@@ -43,6 +43,14 @@
           <td>{{data.fkUser}}</td>
           <td>
             <div class="d-flex justify-content-center align-items-center">
+              {% if data.dateCompleted is None %}
+              <form action="{% url 'completeTask' data.id %}" method="post">
+                  {% csrf_token %}
+                  <button class="btn btn-success btn-sm me-1" type="submit" name="id">     
+                    Completed
+                  </button>
+              </form>
+              {% endif %}
               <form action="{% url 'updateTask' %}" method="post">
                   {% csrf_token %}
                   <button class="btn btn-primary btn-sm me-1" type="submit" name="id" value="{{data.id}}">     
